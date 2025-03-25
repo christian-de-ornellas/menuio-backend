@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import { ISendResponse } from "../types/sendResponse";
 
-// Retorna todos os usuários
-export const getAllUsers = async (req: Request, res: Response) => {
+export const index = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1; // Página padrão é 1
   const pageSize = parseInt(req.query.pageSize as string) || 10; // Tamanho padrão é 10
 
@@ -68,8 +67,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-// Cria um novo usuário
-export const createUser = async (req: Request, res: Response) => {
+export const store = async (req: Request, res: Response) => {
   try {
     const user = new User({ active: true, ...req.body });
     await user.save();
@@ -80,8 +78,7 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// Retorna um usuário pelo ID
-export const getUserById = async (req: Request, res: Response) => {
+export const findById = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -139,8 +136,7 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// Atualiza um usuário pelo ID
-export const updateUser = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -154,8 +150,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// Remove um usuário pelo ID
-export const deleteUser = async (req: Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {

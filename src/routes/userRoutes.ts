@@ -41,7 +41,7 @@ const router = express.Router();
  *        '400':
  *          description: Error ao retornar os usuários
  */
-router.get("/", verifyToken, userController.getAllUsers);
+router.get("/", verifyToken, userController.index);
 /**
  * @swagger
  * paths:
@@ -65,10 +65,6 @@ router.get("/", verifyToken, userController.getAllUsers);
  *                  type: string
  *                password:
  *                  type: string
- *                cellphone:
- *                  type: string
- *                cref:
- *                  type: string
  *      responses:
  *        '201':
  *          description: Usuário criado com sucesso
@@ -76,7 +72,7 @@ router.get("/", verifyToken, userController.getAllUsers);
  *          description: Falha ao criar usuário
  */
 
-router.post("/", userController.createUser);
+router.post("/", userController.store);
 /**
  * @swagger
  * paths:
@@ -100,7 +96,7 @@ router.post("/", userController.createUser);
  *        '404':
  *          description: Usuário não encontrado
  */
-router.get("/:id", verifyToken, userController.getUserById);
+router.get("/:id", verifyToken, userController.findById);
 /**
  * @swagger
  * paths:
@@ -133,36 +129,7 @@ router.get("/:id", verifyToken, userController.getUserById);
  *                  type: string
  *                password:
  *                  type: string
- *                cref:
- *                  type: string
- *                  description: Cref do usuário
- *                cellphone:
- *                  type: string
- *                  description: Número de telefone (opcional)
- *                cep:
- *                  type: string
- *                  description: Cep do usuário (opcional)
- *                address:
- *                  type: string
- *                  description: Endereço do usuário (opcional)
- *                n:
- *                  type: number
- *                  description: número do usuário (opcional)
- *                complement:
- *                  type: string
- *                  description: Complemento do usuário (opcional)
- *                neighborhood:
- *                  type: string
- *                  description: Bairro do usuário (opcional)
- *                city:
- *                  type: string
- *                  description: Cidade do usuário (opcional)
- *                uf:
- *                  type: string
- *                  description: Unidade Federativa do usuário (opcional)
- *                bio:
- *                  type: string
- *                  description: Biografia do usuário (opcional)
+
  *      responses:
  *        '200':
  *          description: Usuário atualizado com sucesso
@@ -171,7 +138,7 @@ router.get("/:id", verifyToken, userController.getUserById);
  *        '400':
  *          description: Falha ao atualizar usuário
  */
-router.put("/:id", verifyToken, userController.updateUser);
+router.put("/:id", verifyToken, userController.update);
 
 /**
  * @swagger
@@ -196,6 +163,6 @@ router.put("/:id", verifyToken, userController.updateUser);
  *        '404':
  *          description: Usuário não encontrado
  */
-router.delete("/:id", verifyToken, userController.deleteUser);
+router.delete("/:id", verifyToken, userController.remove);
 
 export default router;
