@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import bodyParser from "body-parser";
 import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes";
 import cors from "cors";
 import path from "path";
 
@@ -59,6 +60,8 @@ db.once("open", () => {
 });
 
 app.use(`${pathname}/users`, userRoutes);
+app.use(`${pathname}/login`, authRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
