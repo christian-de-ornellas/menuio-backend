@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import cors from "cors";
 import path from "path";
+import menuRoutes from "./routes/menuRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -61,6 +62,7 @@ db.once("open", () => {
 
 app.use(`${pathname}/users`, userRoutes);
 app.use(`${pathname}/login`, authRoutes);
+app.use(`${pathname}/menu`, menuRoutes);
 
 
 app.listen(PORT, () => {
