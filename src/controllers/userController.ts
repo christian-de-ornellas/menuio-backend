@@ -21,12 +21,6 @@ export const index = async (req: Request, res: Response) => {
           { label: "Primeiro", code: "firstName", isVisible: true },
           { label: "Sobrenome", code: "lastName", isVisible: true },
           { label: "E-mail", code: "email", isVisible: true },
-          { label: "Senha", code: "password", isVisible: false },
-          { label: "Bio", code: "bio", isVisible: true },
-          { label: "WhatsApp", code: "cellphone", isVisible: true },
-          { label: "Endereço", code: "address", isVisible: false },
-          { label: "Cidade", code: "city", isVisible: true },
-          { label: "Estado", code: "uf", isVisible: true },
         ],
         filters: [
           {
