@@ -14,7 +14,7 @@ const MONGODB_URI = `mongodb+srv://root:root@cluster0.ct5imhj.mongodb.net/menuio
 const pathname = "/api/v1";
 dotenv.config();
 
-// Configuração do body-parser
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -32,9 +32,9 @@ const swaggerOptions = {
         },
 
         info: {
-            title: "FitMentor Api",
+            title: "Menu.io",
             version: "1.0.0",
-            description: "Documentação da API",
+            description: "Api Documentation",
         },
         servers: [
             {
@@ -58,8 +58,6 @@ db.once("open", () => {
     console.log("Conexão com o MongoDB estabelecida com sucesso.");
 });
 
-// Rotas de usuário
-app.use(`${pathname}/login`, authRoutes);
 app.use(`${pathname}/users`, userRoutes);
 
 app.listen(PORT, () => {
