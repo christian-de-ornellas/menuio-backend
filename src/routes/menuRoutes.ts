@@ -1,27 +1,15 @@
 import express from "express";
 import * as menuController from "../controllers/menuController";
 import { verifyToken } from "../middlewares/checkAuthJwt";
-import multer from "multer";
-
-// Configuração do multer para armazenar imagens localmente
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/"); // Define a pasta onde os arquivos serão armazenados
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname);
-    },
-});
-
-const upload = multer({ storage });
+import upload from "../libs/multer/multerConfig";
 
 const router = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: MenuItems
- *   description: Operações relacionadas aos menus
+ *   name: Menu
+ *   description: Operações relacionadas aos itens do menu
  */
 
 /**
@@ -33,7 +21,7 @@ const router = express.Router();
  *      description: Retorna uma lista de todos os menus cadastrados
  *      security:
  *        - bearerAuth: []
- *      tags: ["Menus"]
+ *      tags: ["Menu"]
  *      responses:
  *        '200':
  *          description: Sucesso ao retornar os menus
@@ -49,7 +37,7 @@ router.get("/", verifyToken, menuController.index);
  *    post:
  *      summary: Cria um novo menu
  *      description: Cria um novo menu com os dados fornecidos e faz o upload de uma imagem
- *      tags: ["Menus"]
+ *      tags: ["Menu"]
  *      security:
  *        - bearerAuth: []
  *      requestBody:
@@ -103,7 +91,7 @@ router.post("/",  upload.single("image"), menuController.store);
  *      description: Remove um menu com base no ID fornecido
  *      security:
  *        - bearerAuth: []
- *      tags: ["Menus"]
+ *      tags: ["Menu"]
  *      parameters:
  *        - in: path
  *          name: id
@@ -117,6 +105,7 @@ router.post("/",  upload.single("image"), menuController.store);
  *        '404':
  *          description: Menu não encontrado
  */
+
 router.delete("/:id", verifyToken, menuController.remove);
 
 export default router;
