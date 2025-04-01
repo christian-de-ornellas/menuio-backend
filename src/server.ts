@@ -51,6 +51,7 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(`${pathname}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 mongoose.connect(MONGODB_URI);
 
