@@ -5,28 +5,32 @@ import fs from "fs";
 import path from "path";
 
 export const index = async (req: Request, res: Response) => {
-    const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
-
     try {
-        const items = await Menu.find()
+        const page = parseInt(req.query.page as string) || 1;
+        const pageSize = parseInt(req.query.pageSize as string) || 10;
+        const search = String(req.query.search || "").trim();
+
+        const filter = search
+            ? { title: { $regex: new RegExp(search, "i") } } // case-insensitive
+            : {};
+
+        const items = await Menu.find(filter)
             .skip((page - 1) * pageSize)
             .limit(pageSize);
 
-        const totalItems = await Menu.countDocuments();
+        const totalItems = await Menu.countDocuments(filter);
 
         const send: ISendResponse = {
             message: "Lista de itens do cardápio",
             items,
             structure: {
                 fields: [
-                    {label: "Título", code: "title", isVisible: true},
-                    {label: "Descrição", code: "description", isVisible: true},
-                    {label: "Imagem", code: "image", isVisible: true},
+                    { label: "Título", code: "title", isVisible: true },
+                    { label: "Descrição", code: "description", isVisible: true },
+                    { label: "Imagem", code: "image", isVisible: true },
                 ],
-
             },
-            toolbar: {header: "Cardápio"},
+            toolbar: { header: "Cardápio" },
             page,
             pageSize,
             totalItems,
@@ -34,7 +38,7 @@ export const index = async (req: Request, res: Response) => {
 
         res.json(send);
     } catch (error: any) {
-        res.status(400).json({message: error.message});
+        res.status(400).json({ message: error.message });
     }
 };
 
