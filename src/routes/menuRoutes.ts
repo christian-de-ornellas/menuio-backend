@@ -95,7 +95,7 @@ const router = express.Router();
  *       '400':
  *         description: Erro ao retornar os menus
  */
-router.get("/", verifyToken, menuController.index);
+router.get("/", menuController.index);
 
 /**
  * @swagger
